@@ -2,14 +2,22 @@
 
 const http = require("http");
 const fs = require("fs")
+const node_static = require("node-static");
 
 console.log("Inicializando el servidor web");
 
+let public_files=new(node_static.Server)("/home/marcandrada/marques_uf3/pub");
+
 http.createServer((request, response) => {
 console.log(request.url);
-if (request.url == "/stars.jpg"){
-	fs.readFile("stars.jpg", (error, content) => {
+public_files.serve(request, response);
 
+
+/*if (request.url == "/stars.jpg"){
+	fs.readFile("stars.jpg", (error, content) => {
+	 response.writeHead(200,{'Content-Type': 'image/jpeg'});
+	 response.write(content);
+	 response.end();
 	});
 }else{
 	fs.readFile("index.html", (error, content) => {
@@ -17,6 +25,6 @@ if (request.url == "/stars.jpg"){
 	response.write(content);
 	response.end();
 }); 
-}
+}*/
 }).listen(8080);
 
